@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - แสดงประวัติส่วนตัว</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+  <!-- Added fixed header with navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <div class="logo">
+        <span data-en="Resume" data-th="เรซูเม่">เรซูเม่</span>
+      </div>
+      <nav class="header-nav">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+          <span class="icon-sun">☀️</span>
+          <span class="icon-moon">🌙</span>
+        </button>
+        <button class="lang-toggle" onclick="toggleLanguage()">
+          <span id="lang-text">EN</span>
+        </button>
+        <button class="btn-primary" onclick="openExternalPDF()">
+          <span data-en="📄 Download resume" data-th="📄 ดาวน์โหลด resume">📄 ดาวน์โหลด resume</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="resume" class="resume-wrapper">
+      <!-- Removed card class to make it cleaner, reduced padding -->
+      <div class="resume-header">
+        <div class="profile-section">
+          <div class="avatar">
+            <img id="avatar-img" class="avatar-img" alt="Profile Avatar" loading="lazy" style="display:none;" />
+            <div id="avatar-text" class="avatar-text"></div>
+          </div>
+
+          <div class="profile-info">
+            <h1 id="name">John Doe</h1>
+            <h3 id="role" class="role">Full Stack Developer</h3>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- Removed card classes, using section-wrapper instead -->
+      <div class="section-wrapper">
+        <h2 class="section-title" data-en="📝 About Me" data-th="📝 เกี่ยวกับฉัน">📝 เกี่ยวกับฉัน</h2>
+        <p id="summary" class="summary">Passionate developer with 5+ years of experience in building web applications.
+          Specialized in React, Node.js, and modern JavaScript frameworks.</p>
+      </div>
+
+      <!-- Updated certificates to use images instead of icons -->
+      <div class="section-wrapper">
+        <h2 class="section-title" data-en="🏆 Certificates" data-th="🏆 ใบรับรอง">🏆 ใบรับรอง</h2>
+        <div id="certificates" class="certificates-list">
+          <div class="certificate-item">
+            <img src="" alt="AWS Certificate" class="certificate-img">
+            <div class="certificate-content">
+              <h3 data-en="AWS Certified Solutions Architect" data-th="AWS Certified Solutions Architect">AWS Certified
+                Solutions Architect</h3>
+              <p class="certificate-issuer" data-en="Amazon Web Services" data-th="Amazon Web Services">Amazon Web
+                Services</p>
+              <span class="date">2023</span>
+            </div>
+          </div>
+          <div class="certificate-item">
+            <img src="" alt="React Certificate" class="certificate-img">
+            <div class="certificate-content">
+              <h3 data-en="React Developer Certification" data-th="React Developer Certification">React Developer
+                Certification</h3>
+              <p class="certificate-issuer" data-en="Meta" data-th="Meta">Meta</p>
+              <span class="date">2022</span>
+            </div>
+          </div>
+          <div class="certificate-item">
+            <img src="" alt="Security Certificate" class="certificate-img">
+            <div class="certificate-content">
+              <h3 data-en="Certified Information Security Manager" data-th="Certified Information Security Manager">
+                Certified Information Security Manager</h3>
+              <p class="certificate-issuer" data-en="ISACA" data-th="ISACA">ISACA</p>
+              <span class="date">2021</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Updated portfolio section with cleaner layout -->
+      <div class="section-wrapper">
+        <h2 class="section-title" data-en="💼 Portfolio" data-th="💼 ผลงาน">💼 ผลงาน</h2>
+        <div id="portfolio" class="portfolio-list">
+          <div class="portfolio-item">
+            <img src="" alt="E-Commerce Platform" class="portfolio-img">
+            <div class="portfolio-content">
+              <h3 data-en="E-Commerce Platform" data-th="แพลตฟอร์ม E-Commerce">E-Commerce Platform</h3>
+              <p data-en="Full-featured e-commerce system with payment integration and product management"
+                data-th="ระบบ E-Commerce แบบครบวงจรพร้อมระบบชำระเงินและจัดการสินค้า">ระบบ E-Commerce
+                แบบครบวงจรพร้อมระบบชำระเงินและจัดการสินค้า</p>
+              <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">MongoDB</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img src="" alt="Task Management App" class="portfolio-img">
+            <div class="portfolio-content">
+              <h3 data-en="Task Management App" data-th="แอปจัดการงาน">Task Management App</h3>
+              <p data-en="Real-time task management application with collaboration features"
+                data-th="แอปพลิเคชันจัดการงานแบบ Real-time พร้อมการทำงานร่วมกัน">แอปพลิเคชันจัดการงานแบบ Real-time
+                พร้อมการทำงานร่วมกัน</p>
+              <div class="tech-stack">
+                <span class="tech-tag">Next.js</span>
+                <span class="tech-tag">WebSocket</span>
+                <span class="tech-tag">PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-item">
+            <img src="" alt="Analytics Dashboard" class="portfolio-img">
+            <div class="portfolio-content">
+              <h3 data-en="Analytics Dashboard" data-th="แดชบอร์ดวิเคราะห์">Analytics Dashboard</h3>
+              <p data-en="Real-time analytics dashboard with charts and reports"
+                data-th="แดชบอร์ดแสดงผลข้อมูลแบบ Real-time พร้อมกราฟและรายงาน">แดชบอร์ดแสดงผลข้อมูลแบบ Real-time
+                พร้อมกราฟและรายงาน</p>
+              <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">D3.js</span>
+                <span class="tech-tag">Express</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-wrapper">
+        <h2 class="section-title" data-en="💼 Work Experience" data-th="💼 ประสบการณ์ทำงาน">💼 ประสบการณ์ทำงาน</h2>
+        <div id="experience" class="experience-list">
+          <div class="experience-item">
+            <div class="experience-header">
+              <h3 data-en="Senior Developer" data-th="Senior Developer">Senior Developer</h3>
+              <span class="date" data-en="2021 - Present" data-th="2021 - ปัจจุบัน">2021 - ปัจจุบัน</span>
+            </div>
+            <p class="company">Tech Company Co., Ltd.</p>
+            <ul class="description">
+              <li data-en="Developed and maintained large-scale web applications"
+                data-th="พัฒนาและดูแลระบบ web application ขนาดใหญ่">พัฒนาและดูแลระบบ web application ขนาดใหญ่</li>
+              <li data-en="Collaborated with team on system architecture design"
+                data-th="ทำงานร่วมกับทีมในการออกแบบสถาปัตยกรรมระบบ">ทำงานร่วมกับทีมในการออกแบบสถาปัตยกรรมระบบ</li>
+              <li data-en="Trained and mentored junior developers" data-th="ฝึกอบรมและดูแลทีมนักพัฒนารุ่นใหม่">
+                ฝึกอบรมและดูแลทีมนักพัฒนารุ่นใหม่</li>
+            </ul>
+          </div>
+          <div class="experience-item">
+            <div class="experience-header">
+              <h3 data-en="Full Stack Developer" data-th="Full Stack Developer">Full Stack Developer</h3>
+              <span class="date">2019 - 2021</span>
+            </div>
+            <p class="company">Startup Inc.</p>
+            <ul class="description">
+              <li data-en="Built web applications with React and Node.js"
+                data-th="สร้างและพัฒนา web applications ด้วย React และ Node.js">สร้างและพัฒนา web applications ด้วย
+                React และ Node.js</li>
+              <li data-en="Designed and developed REST APIs" data-th="ออกแบบและพัฒนา REST APIs">ออกแบบและพัฒนา REST APIs
+              </li>
+              <li data-en="Collaborated with UI/UX designers" data-th="ทำงานร่วมกับ UI/UX designer">ทำงานร่วมกับ UI/UX
+                designer</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-wrapper">
+        <h2 class="section-title" data-en="🎓 Education" data-th="🎓 การศึกษา">🎓 การศึกษา</h2>
+        <div id="education" class="education-list">
+          <div class="education-item">
+            <div class="education-header">
+              <h3 data-en="Bachelor of Science in Computer Science" data-th="วิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์">
+                วิทยาศาสตรบัณฑิต สาขาวิทยาการคอมพิวเตอร์</h3>
+              <span class="date">2015 - 2019</span>
+            </div>
+            <p class="school" data-en="Example University" data-th="มหาวิทยาลัยตัวอย่าง">มหาวิทยาลัยตัวอย่าง</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-wrapper">
+        <h2 class="section-title" data-en="🛠️ Skills" data-th="🛠️ทักษะ">🛠️ ทักษะ</h2>
+        <div id="skills" class="skills-grid">
+          <div class="skill-category">
+            <h4>Frontend</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">React</span>
+              <span class="skill-tag">Next.js</span>
+              <span class="skill-tag">TypeScript</span>
+              <span class="skill-tag">Tailwind CSS</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4>Backend</h4>
+            <div class="skill-tags">
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">Express</span>
+              <span class="skill-tag">PostgreSQL</span>
+              <span class="skill-tag">MongoDB</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h4>Tools</h4>
+            <div class="skill-tags">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="footer-container">
+      <div class="footer-content">
+
+        <!-- Contact -->
+        <div class="footer-section">
+          <h3 data-en="Contact" data-th="ติดต่อ">ติดต่อ</h3>
+          <div class="footer-links">
+            <a href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox?compose=DmwnWrRqjKxFqSFzBKSkLpZHVJvKGlvMjbxhrQvBvHqWWBKVpQMsRFvJBZtxDPVCbMjVmDQBkTqv"
+              class="footer-link" data-contact="email">
+              <span class="icon">📧 kiatsakul@gmail.com</span>
+              <span class="footer-text"></span>
+            </a>
+            <a href="" class="footer-link" data-contact="phone">
+              <span class="icon">📱 0630323214</span>
+              <span class="footer-text"></span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Social -->
+        <div class="footer-section">
+          <h3 data-en="Social" data-th="โซเชียล">โซเชียล</h3>
+          <div class="footer-links">
+            <a href="#" class="footer-link" data-contact="github" target="_blank" rel="noopener noreferrer">
+              <span class="icon">💻</span>
+              <span class="footer-text">GitHub</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="footer-section">
+          <h3 data-en="Location" data-th="ที่อยู่">ที่อยู่</h3>
+          <div class="footer-links">
+            <div class="footer-link" data-contact="location">
+              <span class="icon">📍</span>
+              <span class="footer-text"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p data-en="© 2026 Your Name. All rights reserved." data-th="© 2026 Your Name. สงวนลิขสิทธิ์">
+          © 2026 Your Name. สงวนลิขสิทธิ์
+        </p>
+      </div>
+    </div>
+  </footer>
+
+
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle("dark")
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light")
+    }
+
+    function toggleLanguage() {
+      window.currentLang = window.currentLang === "th" ? "en" : "th"
+      localStorage.setItem("lang", window.currentLang)
+      updateLanguage()
+    }
+
+    function updateLanguage() {
+      const langText = document.getElementById("lang-text")
+      if (langText) {
+        langText.textContent = window.currentLang === "th" ? "EN" : "TH"
+      }
+      const elements = document.querySelectorAll("[data-th][data-en]")
+      elements.forEach((el) => {
+        const thaiText = el.getAttribute("data-th")
+        const englishText = el.getAttribute("data-en")
+        if (window.currentLang === "th") {
+          el.textContent = thaiText
+        } else {
+          el.textContent = englishText
+        }
+      })
+      document.documentElement.lang = window.currentLang
+    }
+    // Load saved theme
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark")
+    }
+
+    // Load language
+    window.currentLang = localStorage.getItem("lang") || "th"
+    updateLanguage()
+  </script>
+  <script type="module" src="./js/supabase.js"></script>
+  <script type="module" src="./js/main.js"></script>
+  <script type="module">
+    import { openExternalPDF } from './js/pdf.js'
+    window.addEventListener("DOMContentLoaded", () => {
+      const btn = document.querySelector(".btn-primary")
+      if (btn) {
+        btn.addEventListener("click", openExternalPDF)
+      }
+    })
+
+  </script>
+
+</body>
+
+</html>
